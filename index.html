@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pyschic Game</title>
+</head>
+
+<body>
+
+	<h1>Pyschic Game</h1>
+
+	<p>Guess what letter I'm thinking of</p>
+
+	<div id = "game">
+		<p>Wins:</p>
+		<p>Losses: </p>
+		<p>Guesses Left:</p>
+		<p>Your Guesses so far:</p>
+	</div>
+
+<script type="text/javascript">
+	
+	var wins = 0;
+	var losses = 0;
+	var guessesLeft = 9;
+	var pastGuesses = [];
+	var validLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+
+	
+	function getNewComputerGuess() {
+		computerSelection = validLetters[Math.floor(Math.random()*validLetters.length)];
+		console.log("computer guess is " + computerSelection);
+	}
+
+	getNewComputerGuess();
+
+	function gameReset() {
+		guessesLeft = 9;
+		pastGuesses = [];
+		getNewComputerGuess();
+		console.log("Game has reset.  " + 
+						"Guesses left is " + guessesLeft +
+						" User guesses are " + pastGuesses);
+	}
+
+	document.onkeyup = function (event){
+		var currentGuess = event.key;
+		var currentGuessLower = currentGuess.toLowerCase();
+		if (currentGuessLower == 'a'|| currentGuessLower =='b' ||currentGuessLower =='c' || currentGuessLower =='d' || currentGuessLower =='e'|| currentGuessLower =='f'|| currentGuessLower =='g'|| currentGuessLower =='h'|| currentGuessLower =='i'|| currentGuessLower =='j'|| currentGuessLower =='k' || currentGuessLower =='l' || currentGuessLower =='m' || currentGuessLower =='n' || currentGuessLower =='o' || currentGuessLower =='p'|| currentGuessLower =='q'|| currentGuessLower =='r'|| currentGuessLower =='s'|| currentGuessLower =='t'|| currentGuessLower =='u'|| currentGuessLower =='v' || currentGuessLower =='w' || currentGuessLower =='x' || currentGuessLower =='y' || currentGuessLower =='z'){
+		
+			if (guessesLeft > 1){
+				if (currentGuessLower === computerSelection){
+					wins++;
+					gameReset();
+					console.log("wins are " + wins);
+				}
+					else {					
+						guessesLeft --;
+						pastGuesses.push(currentGuess);
+						console.log("Guesses left " + guessesLeft);
+						console.log('past guesses are ' + pastGuesses);
+					}
+			}
+			else {
+				losses++;
+				gameReset();
+				console.log("losses are " + losses);
+			}
+
+		var html = document.querySelector("#game").innerHTML = 
+						"<p>Wins: " + wins + "</p>" +
+						"<p>Losses: " + losses + "</p>" +
+						"<p>Guesses Left: " + guessesLeft + "</p>" +
+						"<p>Your Guesses so far: " + pastGuesses + "</p>";
+		}
+		else {
+			alert("Please enter a letter between a and z");
+		}
+		}					
+
+
+</script>
+
+</body>
+</html>
